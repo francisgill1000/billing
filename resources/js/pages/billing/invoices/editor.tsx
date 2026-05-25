@@ -132,7 +132,7 @@ export default function Editor({ mode, customers, catalog, next_number, invoice 
                     }
                 />
 
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                         <Card title="Invoice details">
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>

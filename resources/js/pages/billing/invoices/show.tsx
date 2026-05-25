@@ -55,7 +55,7 @@ export default function Show({ invoice, company }: { invoice: Invoice; company: 
                     </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
                     <InvoicePaper doc={invoice} company={company} kind="invoice" />
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>

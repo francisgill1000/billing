@@ -8,7 +8,7 @@ type SharedProps = {
     flash?: string | null;
 };
 
-function Sidebar({ active }: { active: string }) {
+function Sidebar({ active, onNavigate }: { active: string; onNavigate?: () => void }) {
     const items = [
         { id: 'dashboard', label: 'Dashboard', icon: Icons.Dashboard, href: '/dashboard' },
         { id: 'invoices', label: 'Invoices', icon: Icons.Invoice, href: '/invoices' },
@@ -41,6 +41,7 @@ function Sidebar({ active }: { active: string }) {
                         <Link
                             key={it.id}
                             href={it.href}
+                            onClick={() => onNavigate?.()}
                             className={`nav-item ${active === it.id ? 'active' : ''}`}
                         >
                             <span className="nav-icon">
@@ -60,6 +61,7 @@ function Sidebar({ active }: { active: string }) {
                         <Link
                             key={it.id}
                             href={it.href}
+                            onClick={() => onNavigate?.()}
                             className={`nav-item ${active === it.id ? 'active' : ''}`}
                         >
                             <span className="nav-icon">
@@ -105,9 +107,24 @@ function Sidebar({ active }: { active: string }) {
     );
 }
 
-function Topbar({ title, crumb }: { title: React.ReactNode; crumb?: React.ReactNode }) {
+function Topbar({
+    title,
+    crumb,
+    onMenuClick,
+}: {
+    title: React.ReactNode;
+    crumb?: React.ReactNode;
+    onMenuClick: () => void;
+}) {
     return (
         <header className="topbar">
+            <button type="button" className="mobile-menu-btn" onClick={onMenuClick} aria-label="Open menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
+                </svg>
+            </button>
             <div className="topbar-title">
                 {crumb && <span className="crumb">{crumb}</span>}
                 {crumb && <Icons.ChevronRight size={14} style={{ color: 'var(--text-4)' }} />}
@@ -147,12 +164,25 @@ export default function BillingLayout({
         }
     }, [flash]);
 
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const closeMobile = React.useCallback(() => setMobileOpen(false), []);
+
+    React.useEffect(() => {
+        if (!mobileOpen) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') closeMobile();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [mobileOpen, closeMobile]);
+
     return (
         <div className="billing-root">
-            <div className="app">
-                <Sidebar active={active} />
+            <div className={`app ${mobileOpen ? 'mobile-open' : ''}`}>
+                <div className="mobile-overlay" onClick={closeMobile}></div>
+                <Sidebar active={active} onNavigate={closeMobile} />
                 <main className="main">
-                    <Topbar title={title} crumb={crumb} />
+                    <Topbar title={title} crumb={crumb} onMenuClick={() => setMobileOpen((v) => !v)} />
                     {children}
                 </main>
             </div>

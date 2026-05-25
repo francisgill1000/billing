@@ -146,7 +146,7 @@ export default function Dashboard({ stats, segments, revenue_monthly, recent_inv
                     <StatTile label="Active quotes" value={stats.active_quotes} delta={`AED ${fmt(stats.pipeline_value)} pipeline`} deltaDir="flat" />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 20, marginBottom: 28 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 20, marginBottom: 28 }}>
                     <Card
                         title="Revenue · last 12 months"
                         action={
@@ -165,7 +165,7 @@ export default function Dashboard({ stats, segments, revenue_monthly, recent_inv
                     </Card>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 20 }}>
                     <Card
                         title="Recent invoices"
                         action={<Btn variant="ghost" size="sm" as="a" href="/invoices">View all <Icons.ChevronRight size={14} /></Btn>}

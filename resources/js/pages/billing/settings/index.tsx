@@ -85,8 +85,8 @@ export default function Settings({ settings }: { settings: CompanySettings }) {
             <div className="page">
                 <PageHeader title="Settings" subtitle="Manage your company profile, billing, and team." />
 
-                <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 24, alignItems: 'flex-start' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, position: 'sticky', top: 88 }}>
+                <div className="bil-settings-grid" style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 24, alignItems: 'flex-start' }}>
+                    <div className="bil-settings-nav" style={{ display: 'flex', flexDirection: 'column', gap: 2, position: 'sticky', top: 88 }}>
                         {navItems.map((t) => {
                             const Icon = t.icon;
                             return (

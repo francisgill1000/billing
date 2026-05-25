@@ -42,7 +42,7 @@ export default function Show({ quotation, company }: { quotation: Quotation; com
                     </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
                     <InvoicePaper doc={quotation} company={company} kind="quote" />
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>

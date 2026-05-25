@@ -63,7 +63,7 @@ export default function Reports({ stats, revenue_monthly, aging, top_customers, 
                     <StatTile label="Collection rate" value={`${stats.collection_rate}%`} delta="+3 pp" deltaDir="up" />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20, marginBottom: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20, marginBottom: 20 }}>
                     <Card title="Monthly revenue · last 12 months">
                         <RevenueBars data={revenue_monthly} />
                     </Card>
@@ -84,7 +84,7 @@ export default function Reports({ stats, revenue_monthly, aging, top_customers, 
                     </Card>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                     <Card title="Top customers · this year" padding={false}>
                         <div className="table-wrap">
                             <table className="table">

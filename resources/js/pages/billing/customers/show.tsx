@@ -63,7 +63,7 @@ export default function Show({ customer, stats, invoices, quotations, payments }
                     <StatTile label="Customer since" value={customer.since ? new Date(customer.since).getFullYear() : '—'} />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
+                <div className="bil-stack-mobile" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
                     <div>
                         <Tabs<Tab>
                             tabs={[
