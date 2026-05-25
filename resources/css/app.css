@@ -494,28 +494,33 @@
     letter-spacing: -0.005em;
     text-decoration: none;
     background: transparent;
-    color: var(--text-2);
+    color: var(--text-1);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .btn:active {
     transform: translateY(1px);
 }
 .btn-primary {
     background: var(--mint-500);
-    color: #03261f;
-    font-weight: 600;
+    color: #000;
+    font-weight: 700;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
     box-shadow:
-        0 0 0 1px rgba(0, 255, 204, 0.4),
-        0 10px 28px -6px rgba(0, 255, 204, 0.55),
-        0 0 40px -8px rgba(0, 255, 204, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+        0 4px 12px -4px rgba(0, 255, 204, 0.35);
+}
+.btn-primary svg {
+    stroke: #000;
+    stroke-width: 2.5;
 }
 .btn-primary:hover {
     background: #2bffd6;
     box-shadow:
-        0 0 0 1px rgba(0, 255, 204, 0.5),
-        0 12px 32px -6px rgba(0, 255, 204, 0.7),
-        0 0 50px -8px rgba(0, 255, 204, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        inset 0 0 0 1px rgba(0, 0, 0, 0.2),
+        0 6px 16px -4px rgba(0, 255, 204, 0.45);
 }
 .btn-secondary {
     background: var(--surface-2);
@@ -528,7 +533,7 @@
 }
 .btn-ghost {
     background: transparent;
-    color: var(--text-2);
+    color: var(--text-1);
 }
 .btn-ghost:hover {
     background: var(--surface-1);
@@ -1044,7 +1049,7 @@
     border: 0;
     padding: 10px 14px;
     margin-bottom: -1px;
-    color: var(--text-3);
+    color: var(--text-2);
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
@@ -1054,6 +1059,7 @@
     gap: 8px;
     transition: color 0.15s, border-color 0.15s;
     font-family: inherit;
+    -webkit-font-smoothing: antialiased;
 }
 .tab:hover {
     color: var(--text-1);
@@ -1128,6 +1134,20 @@
 }
 .billing-root a:hover {
     color: var(--mint-200);
+}
+.billing-root a.btn-primary,
+.billing-root a.btn-primary:hover {
+    color: #000;
+}
+.billing-root a.btn-secondary,
+.billing-root a.btn-ghost,
+.billing-root a.btn-secondary:hover,
+.billing-root a.btn-ghost:hover {
+    color: var(--text-1);
+}
+.billing-root a.btn-danger,
+.billing-root a.btn-danger:hover {
+    color: #fca5a5;
 }
 
 .switch {
@@ -1473,9 +1493,7 @@
         z-index: 50;
         transform: translateX(-100%);
         transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
-        background: linear-gradient(180deg, rgba(15, 20, 17, 0.98), rgba(10, 14, 12, 0.95));
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        background: #0a0e0c;
     }
     .billing-root .app.mobile-open .sidebar { transform: translateX(0); }
 
@@ -1497,7 +1515,10 @@
     .billing-root .page-header h1 { font-size: 22px; }
     .billing-root .page-header p { font-size: 13px; }
     .billing-root .page-header-actions { flex-wrap: wrap; gap: 8px; }
-    .billing-root .page-header-actions .btn { flex: 1; min-width: 0; }
+    .billing-root .page-header-actions .btn { flex: 0 0 auto; }
+
+    /* Generic safety net — never let a labeled button collapse below its content */
+    .billing-root .btn:not(.btn-icon) { flex-shrink: 0; min-width: max-content; }
 
     .billing-root .grid-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
     .billing-root .grid-2,
