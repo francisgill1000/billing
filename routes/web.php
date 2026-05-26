@@ -9,7 +9,6 @@ use App\Http\Controllers\Billing\QuotationController;
 use App\Http\Controllers\Billing\RecurringController;
 use App\Http\Controllers\Billing\ReportController;
 use App\Http\Controllers\Billing\SettingsController;
-use App\Http\Controllers\Teams\TeamInvitationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,8 +21,6 @@ Route::get('/', function () {
 Route::get('pay/{number}', [PortalController::class, 'show'])->name('billing.portal');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('invitations.accept');
-
     // Billing dashboard + resources
     Route::get('dashboard', [DashboardController::class, 'index'])->name('billing.dashboard');
 

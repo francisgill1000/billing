@@ -5,7 +5,7 @@ import { Icons, Logo } from '@/billing/icons';
 import { Btn, Card, Field, Input, PageHeader, Select, Textarea } from '@/billing/ui';
 import type { CompanySettings } from '@/billing/types';
 
-type Tab = 'company' | 'invoicing' | 'templates' | 'tax' | 'notifications' | 'team' | 'billing';
+type Tab = 'company' | 'invoicing' | 'templates' | 'tax' | 'notifications' | 'billing';
 
 function SettingRow({ title, desc, value, onChange }: { title: string; desc: string; value: boolean; onChange: (v: boolean) => void }) {
     return (
@@ -75,7 +75,6 @@ export default function Settings({ settings }: { settings: CompanySettings }) {
         { id: 'templates', label: 'Email templates', icon: Icons.Mail },
         { id: 'tax', label: 'Tax & currency', icon: Icons.Receipt },
         { id: 'notifications', label: 'Notifications', icon: Icons.Bell },
-        { id: 'team', label: 'Team', icon: Icons.Users },
         { id: 'billing', label: 'Plan & billing', icon: Icons.Card },
     ];
 
@@ -83,7 +82,7 @@ export default function Settings({ settings }: { settings: CompanySettings }) {
         <BillingLayout active="settings" title="Settings">
             <Head title="Settings" />
             <div className="page">
-                <PageHeader title="Settings" subtitle="Manage your company profile, billing, and team." />
+                <PageHeader title="Settings" subtitle="Manage your company profile and billing." />
 
                 <div className="bil-settings-grid" style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 24, alignItems: 'flex-start' }}>
                     <div className="bil-settings-nav" style={{ display: 'flex', flexDirection: 'column', gap: 2, position: 'sticky', top: 88 }}>
@@ -276,31 +275,13 @@ export default function Settings({ settings }: { settings: CompanySettings }) {
                             </Card>
                         )}
 
-                        {tab === 'team' && (
-                            <Card title="Team members" action={<Btn variant="primary" size="sm" icon={<Icons.Plus size={13} />}>Invite</Btn>}>
-                                <div className="kpi-row" style={{ paddingTop: 0 }}>
-                                    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                                        <div className="cust-avatar">LH</div>
-                                        <div>
-                                            <div style={{ color: 'var(--text-1)', fontSize: 14 }}>Layla Haddad</div>
-                                            <div style={{ color: 'var(--text-4)', fontSize: 12 }}>admin@billing.test</div>
-                                        </div>
-                                    </div>
-                                    <span className="badge badge-accepted"><span className="dot"></span>Owner</span>
-                                </div>
-                                <div style={{ marginTop: 12, padding: 14, background: 'var(--surface-1)', border: '1px solid var(--border-2)', borderRadius: 10, fontSize: 13, color: 'var(--text-3)' }}>
-                                    Invite team members from <a href="/settings/teams">workspace teams</a> in your account settings.
-                                </div>
-                            </Card>
-                        )}
-
                         {tab === 'billing' && (
                             <Card title="Plan & billing">
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0 16px', borderBottom: '1px solid var(--border-1)', marginBottom: 16 }}>
                                     <div>
                                         <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--mint-300)', marginBottom: 4 }}>Current plan</div>
                                         <div style={{ fontSize: 20, fontWeight: 600, color: 'var(--text-1)' }}>Pro · AED 149/month</div>
-                                        <div style={{ fontSize: 13, color: 'var(--text-3)', marginTop: 4 }}>Unlimited invoices, 5 team members, priority support.</div>
+                                        <div style={{ fontSize: 13, color: 'var(--text-3)', marginTop: 4 }}>Unlimited invoices, priority support.</div>
                                     </div>
                                     <Btn variant="secondary">Change plan</Btn>
                                 </div>
