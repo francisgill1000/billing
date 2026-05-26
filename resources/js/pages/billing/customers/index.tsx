@@ -1,15 +1,15 @@
 import { Head, router } from '@inertiajs/react';
 import * as React from 'react';
+import AddCustomerDrawer from '@/billing/AddCustomerDrawer';
 import BillingLayout from '@/billing/BillingLayout';
 import { Icons } from '@/billing/icons';
-import { Btn, Card, Field, Input, PageHeader, Toolbar } from '@/billing/ui';
+import { Btn, Card, PageHeader, Toolbar } from '@/billing/ui';
 import { formatAED, formatDate } from '@/billing/format';
 import type { Customer } from '@/billing/types';
 
 export default function Index({ customers }: { customers: Customer[] }) {
     const [query, setQuery] = React.useState('');
     const [showAdd, setShowAdd] = React.useState(false);
-    const [form, setForm] = React.useState({ name: '', contact: '', email: '', phone: '', city: '', country: 'UAE', trn: '' });
 
     const filtered = customers.filter((c) => !query || c.name.toLowerCase().includes(query.toLowerCase()));
     const totalOutstanding = customers.reduce((s, c) => s + (c.outstanding ?? 0), 0);
@@ -84,38 +84,7 @@ export default function Index({ customers }: { customers: Customer[] }) {
                 </Card>
             </div>
 
-            {showAdd && (
-                <>
-                    <div className="drawer-overlay" onClick={() => setShowAdd(false)}></div>
-                    <div className="drawer">
-                        <div className="drawer-header">
-                            <h2>Add customer</h2>
-                            <Btn variant="ghost" size="sm" icon={<Icons.X size={16} />} onClick={() => setShowAdd(false)} />
-                        </div>
-                        <div className="drawer-body">
-                            <div style={{ display: 'grid', gap: 14 }}>
-                                <Field label="Company name"><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></Field>
-                                <Field label="Primary contact"><Input value={form.contact} onChange={(e) => setForm({ ...form, contact: e.target.value })} /></Field>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-                                    <Field label="Email"><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
-                                    <Field label="Phone"><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></Field>
-                                </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-                                    <Field label="City"><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></Field>
-                                    <Field label="Country"><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></Field>
-                                </div>
-                                <Field label="TRN"><Input value={form.trn} onChange={(e) => setForm({ ...form, trn: e.target.value })} /></Field>
-                            </div>
-                        </div>
-                        <div className="drawer-footer">
-                            <Btn variant="ghost" onClick={() => setShowAdd(false)}>Cancel</Btn>
-                            <Btn variant="primary" onClick={() => router.post('/customers', form, { onSuccess: () => setShowAdd(false) })}>
-                                <Icons.Check size={14} /> Add customer
-                            </Btn>
-                        </div>
-                    </div>
-                </>
-            )}
+            <AddCustomerDrawer open={showAdd} onClose={() => setShowAdd(false)} />
         </BillingLayout>
     );
 }

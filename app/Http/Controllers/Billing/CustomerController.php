@@ -69,13 +69,23 @@ class CustomerController extends Controller
             'city' => 'nullable|string|max:128',
             'country' => 'nullable|string|max:128',
             'notes' => 'nullable|string',
+            'redirect_to' => 'nullable|string',
         ]);
+
+        $redirectTo = $data['redirect_to'] ?? null;
+        unset($data['redirect_to']);
 
         $data['initials'] = collect(explode(' ', $data['name']))->take(2)
             ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
         $data['customer_since'] = now()->toDateString();
 
         $customer = $request->user()->customers()->create($data);
+
+        if ($redirectTo === 'back') {
+            return back()
+                ->with('flash', 'Customer added')
+                ->with('new_customer_id', $customer->id);
+        }
 
         return redirect()->route('billing.customers.show', $customer)->with('flash', 'Customer added');
     }

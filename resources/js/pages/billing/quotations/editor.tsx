@@ -1,5 +1,6 @@
-import { Head, router } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import * as React from 'react';
+import AddCustomerDrawer from '@/billing/AddCustomerDrawer';
 import BillingLayout from '@/billing/BillingLayout';
 import { Icons } from '@/billing/icons';
 import { Btn, Card, CustomerCell, Field, Input, PageHeader, Select, Textarea } from '@/billing/ui';
@@ -15,7 +16,17 @@ type Props = {
 };
 
 export default function Editor({ mode, customers, catalog, next_number, quotation }: Props) {
+    const newCustomerId = usePage<{ new_customer_id?: number }>().props.new_customer_id;
+
     const [customerId, setCustomerId] = React.useState<number>(quotation?.customer_id ?? (customers[0]?.id ?? 0));
+    const [showAddCustomer, setShowAddCustomer] = React.useState(false);
+
+    React.useEffect(() => {
+        if (newCustomerId && customers.some((c) => c.id === newCustomerId)) {
+            setCustomerId(newCustomerId);
+        }
+    }, [newCustomerId, customers]);
+
     const [issueDate, setIssueDate] = React.useState(quotation?.issue_date ?? new Date().toISOString().slice(0, 10));
     const [validUntil, setValidUntil] = React.useState(quotation?.valid_until ?? new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10));
     const [taxRate, setTaxRate] = React.useState<number>(quotation?.tax_rate ?? 5);
@@ -75,11 +86,24 @@ export default function Editor({ mode, customers, catalog, next_number, quotatio
                         <Card title="Quotation details">
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
                                 <Field label="Customer">
-                                    <Select value={customerId} onChange={(e) => setCustomerId(Number(e.target.value))}>
-                                        {customers.map((c) => (
-                                            <option key={c.id} value={c.id}>{c.name}</option>
-                                        ))}
-                                    </Select>
+                                    <div style={{ display: 'flex', gap: 6, alignItems: 'stretch' }}>
+                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                            <Select value={customerId} onChange={(e) => setCustomerId(Number(e.target.value))}>
+                                                {customers.length === 0 && <option value="">No customers yet — add one →</option>}
+                                                {customers.map((c) => (
+                                                    <option key={c.id} value={c.id}>{c.name}</option>
+                                                ))}
+                                            </Select>
+                                        </div>
+                                        <Btn
+                                            variant="secondary"
+                                            icon={<Icons.Plus size={14} />}
+                                            onClick={() => setShowAddCustomer(true)}
+                                            title="Add new customer"
+                                        >
+                                            New
+                                        </Btn>
+                                    </div>
                                 </Field>
                                 <Field label="Quotation number">
                                     <Input value={quotation?.number ?? next_number ?? ''} readOnly />
@@ -185,6 +209,11 @@ export default function Editor({ mode, customers, catalog, next_number, quotatio
                     </div>
                 </div>
             </div>
+            <AddCustomerDrawer
+                open={showAddCustomer}
+                onClose={() => setShowAddCustomer(false)}
+                redirectTo="back"
+            />
         </BillingLayout>
     );
 }

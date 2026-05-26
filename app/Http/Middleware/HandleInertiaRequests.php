@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
             'teams' => fn () => $user?->toUserTeams(includeCurrent: true) ?? [],
             'flash' => fn () => $request->session()->get('flash'),
             'editor_initial' => fn () => $request->session()->get('editor_initial'),
+            'new_customer_id' => fn () => $request->session()->get('new_customer_id'),
         ];
     }
 }
